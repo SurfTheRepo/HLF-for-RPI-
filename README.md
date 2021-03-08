@@ -2,6 +2,7 @@
 
 This repo contains the fabric samples with binaries built for ARM64 architecture that is able to run on a Raspberry Pi.
 
+
 ## Hardware
 This has been run on a Raspberry Pi 4, with 8gb of ram and a 32gb SD card.
 
@@ -14,13 +15,23 @@ It may work on another 64bit OS, like Linux Server or Mate, but has not been tes
 
 ## Installation
 
-Clone the repository, will include binaries inside bin.
+Clone this repository, will include binaries inside bin.
 
 Run the pull-hlf-arm-images.sh this will pull necesary images from dockerhub
 
 ```bash
 sh pull-hlf-arm-images.sh
 ```
+
+## Setting Up Go Path
+- Add gopath
+```export GOPATH=$HOME/go```
+
+- Add hyperledger source to go path
+
+``` mkdir -p $GOPATH/src/github.com/hyperledger```
+ - Clone fabric 2.3
+ ```git clone -b release-2.3 https://github.com/hyperledger/fabric.git```
 
 ## Usage
 
@@ -38,7 +49,7 @@ https://github.com/hyperledger/fabric/pull/1086
 
 These changes were applied on cloned 2.3 repo and built in a linux VM then pushed to dockerhub and then pulled into the raspberry pi.
 
-Fabric CA images(v1.4.7) were pulled from another dockerhub repo as they already existted for ARM64
+Fabric CA images(v1.4.7) were pulled from another dockerhub repo as they already existted for ARM64 *But cyrptogen is used, not a CA*
 ## How to build Binaries
 
 Binaries were built by cloning the hyperledger fabric 2.3 release repo and running:

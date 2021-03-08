@@ -1,0 +1,1 @@
+docker-compose -f pi1.yaml up -d

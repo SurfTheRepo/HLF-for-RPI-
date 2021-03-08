@@ -1,0 +1,7 @@
+put path to correct binaries
+
+cryptogen generate --config=./crypto-config.yaml
+
+configtxgen -profile SampleMultiNodeEtcdRaft -channelID byfn-sys-channel -outputBlock ./channel-artifacts/genesis.block
+
+configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID ottosFirst

@@ -2,15 +2,7 @@
 
 This repo contains the fabric samples with binaries built for ARM64 architecture that is able to run on a Raspberry Pi.
 
-## Setting Up Go Path
-- Add gopath
-```export GOPATH=$HOME/go```
 
-- Add hyperledger source to go path
-
-``` mkdir -p $GOPATH/src/github.com/hyperledger```
- - Clone fabric 2.3
- ```git clone -b release-2.3 https://github.com/hyperledger/fabric.git```
 ## Hardware
 This has been run on a Raspberry Pi 4, with 8gb of ram and a 32gb SD card.
 

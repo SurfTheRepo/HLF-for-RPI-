@@ -49,7 +49,7 @@ https://github.com/hyperledger/fabric/pull/1086
 
 These changes were applied on cloned 2.3 repo and built in a linux VM then pushed to dockerhub and then pulled into the raspberry pi.
 
-Fabric CA images(v1.4.7) were pulled from another dockerhub repo as they already existted for ARM64
+Fabric CA images(v1.4.7) were pulled from another dockerhub repo as they already existted for ARM64 *But cyrptogen is used, not a CA*
 ## How to build Binaries
 
 Binaries were built by cloning the hyperledger fabric 2.3 release repo and running:

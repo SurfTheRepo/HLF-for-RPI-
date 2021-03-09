@@ -4,9 +4,9 @@ volumes:
   orderer.example.com:
 
 networks:
-  byfn:
-    external:
-      name: pi-network
+  pi-network:
+    external: true 
+
 
 services:
 
@@ -20,4 +20,4 @@ services:
     #   # - CORE_OPERATIONS_LISTENADDRESS=peer1.org1.example.com:8443
     container_name: orderer.example.com
     networks:
-    - byfn
+    - pi-network

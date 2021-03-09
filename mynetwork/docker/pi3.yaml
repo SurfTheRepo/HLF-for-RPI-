@@ -4,9 +4,8 @@ volumes:
   peer2.org1.example.com:
 
 networks:
-  byfn:
-    external:
-      name: pi-network
+  pi-network:
+    external: true 
 
 services:
   peer2.org1.example.com:
@@ -15,7 +14,7 @@ services:
       file:  docker-compose-base.yaml
       service: peer2.org1.example.com
     networks:
-      - byfn
+      - pi-network
 
   cli:
     container_name: cli
@@ -47,4 +46,4 @@ services:
     depends_on:
       - peer2.org1.example.com
     networks:
-      - byfn
+      - pi-network

@@ -14,10 +14,10 @@ services:
     extends:
       file: docker-compose-base.yaml
       service: orderer.example.com
-    environment:
-      # metrics
-      # - CORE_METRICS_PROVIDER=prometheus
-      # - CORE_OPERATIONS_LISTENADDRESS=peer1.org1.example.com:8443
+    # environment:
+    #   # metrics
+    #   # - CORE_METRICS_PROVIDER=prometheus
+    #   # - CORE_OPERATIONS_LISTENADDRESS=peer1.org1.example.com:8443
     container_name: orderer.example.com
     networks:
     - byfn

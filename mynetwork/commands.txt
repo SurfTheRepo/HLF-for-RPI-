@@ -1,24 +1,77 @@
 put path to correct binaries
 
+channelID=ottospis
+
+
+
+
+~~~ These are done on the virtual machine ~~~~
+
+Generate crypto files:
+******************************************************************************************************************************************************
 cryptogen generate --config=./crypto-config.yaml
+******************************************************************************************************************************************************
 
+Create the channelTx file
+******************************************************************************************************************************************************
+configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/ottospis.tx -channelID ottospis
+******************************************************************************************************************************************************
+
+Create the genesis block
+******************************************************************************************************************************************************
 configtxgen -profile SampleMultiNodeEtcdRaft -channelID ottospis -outputBlock ./channel-artifacts/genesis.block
-
-configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID ottospis
-
-docker exec cli peer channel create -o orderer.example.com:7050 -c ottospis -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
-
-
-docker exec cli peer channel join -b ./channel-artifacts/genesis.block
+******************************************************************************************************************************************************
+------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
-docker exec -e CORE_PEER_ADDRESS=peer0.org1.example.com:7051 -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt cli peer channel join -b ./channel-artifacts/genesis.block
 
- docker run -itd --name mybusybox --network pi-network busybox
+~~~ Swarm & Overlay setup ~~~
 
-docker exec cli peer channel fetch newest ottospis.block -c ottospis --orderer orderer.example.com:7050
+start a swarm
+******************************************************************************************************************************************************
+docker swarm init --advertise-addr 192.168.86.151/150/74/154
+******************************************************************************************************************************************************
 
-docker swarm join --token SWMTKN-1-2e71jqasinpn9081f1fmbhmeygy41woiggomgsw1rx8vmo3gxh-a4eft8eaacun78719jo6y2chh 192.168.86.154:2377 --advertise-addr 192.168.86.151
+join swarm
+******************************************************************************************************************************************************
+docker swarm join XXXXXXX --advertise-addr 192.168.86.151/150/74/154
+******************************************************************************************************************************************************
 
+Create the overlay
+******************************************************************************************************************************************************
 docker network create --attachable –driver overlay pi-network
+******************************************************************************************************************************************************
+
+create a container to 'touch' the network
+******************************************************************************************************************************************************
+docker run -itd --name mybusybox --network pi-network busybox
+******************************************************************************************************************************************************
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+~~~ Creating the channel(laptop)  ~~~
+
+******************************************************************************************************************************************************
+docker exec cli peer channel create -o orderer.example.com:7050 -c ottospis -f ./channel-artifacts/ottospis.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+******************************************************************************************************************************************************
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+~~~ Joining the channel ~~~
+
+******************************************************************************************************************************************************
+docker exec cli peer channel join -b ./channel-artifacts/ottospis.block
+******************************************************************************************************************************************************
+
+******************************************************************************************************************************************************
+docker exec -e CORE_PEER_ADDRESS=peer0.org1.example.com:7051 -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt cli peer channel join -b ./channel-artifacts/ottospis.block
+******************************************************************************************************************************************************
+
+
+******************************************************************************************************************************************************
+docker exec cli peer channel fetch newest ottospis.block -c ottospis --orderer orderer.example.com:7050
+******************************************************************************************************************************************************
+

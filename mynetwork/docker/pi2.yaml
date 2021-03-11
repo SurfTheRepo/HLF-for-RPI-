@@ -46,7 +46,7 @@ services:
     networks:
       -pi-network
 
-    cli:
+  cli:
     container_name: cli
     image: hyperledger/fabric-tools:latest
     tty: true

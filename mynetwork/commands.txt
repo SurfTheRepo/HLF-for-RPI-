@@ -81,6 +81,13 @@ chmod +x pi3Up.sh pi3down.sh
 
 ******************************************************************************************************************************************************
 docker exec cli peer channel create -o orderer.example.com:7050 -c ottospis -f ./channel-artifacts/ottospis.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+export ORDERER_CA=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
+
+
+osnadmin channel join --channelID pichannel --config-block ./channel-artifacts/pichannel.block -o orderer.example.com:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 ******************************************************************************************************************************************************
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

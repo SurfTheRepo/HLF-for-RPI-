@@ -14,12 +14,7 @@ cryptogen generate --config=./crypto-config.yaml
 
 Create the genesis block
 ******************************************************************************************************************************************************
-configtxgen -profile SampleMultiNodeEtcdRaft -channelID byfn-sys-channel -outputBlock ./channel-artifacts/genesis.block
-******************************************************************************************************************************************************
-
-Create the channelTx file
-******************************************************************************************************************************************************
-configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/ottospis.tx -channelID ottospis
+configtxgen -profile MultiPiEtcdRaft -outputBlock ./channel-artifacts/pichannel.block -channelID pichannel
 ******************************************************************************************************************************************************
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -267,18 +267,9 @@ Channel: &ChannelDefaults
 ################################################################################
 Profiles:
 
-    TwoOrgsChannel:
-        Consortium: SampleConsortium
-        <<: *ChannelDefaults
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *Org1
-                #- *Org2
-            Capabilities:
-                <<: *ApplicationCapabilities
 
-    SampleMultiNodeEtcdRaft:
+
+    MultiPiEtcdRaft:
         <<: *ChannelDefaults
         Capabilities:
             <<: *ChannelCapabilities
@@ -291,10 +282,8 @@ Profiles:
                   Port: 7050
                   ClientTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
                   ServerTLSCert: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
-                
             Addresses:
                 - orderer.example.com:7050
-
             Organizations:
             - *OrdererOrg
             Capabilities:
@@ -302,9 +291,6 @@ Profiles:
         Application:
             <<: *ApplicationDefaults
             Organizations:
-            - <<: *OrdererOrg
-        Consortiums:
-            SampleConsortium:
-                Organizations:
                 - *Org1
-                #- *Org2
+            Capabilities:
+                <<: *ApplicationCapabilities

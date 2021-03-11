@@ -86,7 +86,7 @@ services:
     ports:
       - 7051:7051
     networks:
-      -pi-network
+      - pi-network
 
   cli:
     container_name: cli

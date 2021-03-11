@@ -10,8 +10,7 @@ networks:
 
 
 services:
-
-    orderer.example.com:
+  orderer.example.com:
     container_name: orderer.example.com
     image: hyperledger/fabric-orderer:latest
     environment: 

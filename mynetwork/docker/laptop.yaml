@@ -50,7 +50,7 @@ services:
     networks:
       - pi-network
 
-    peer0.org1.example.com:
+  peer0.org1.example.com:
     container_name: peer0.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
@@ -88,7 +88,7 @@ services:
     networks:
       -pi-network
 
-    cli:
+  cli:
     container_name: cli
     image: hyperledger/fabric-tools:$IMAGE_TAG
     tty: true

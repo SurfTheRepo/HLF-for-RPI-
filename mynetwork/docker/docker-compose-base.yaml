@@ -112,8 +112,11 @@ services:
       # - CORE_OPERATIONS_LISTENADDRESS=peer0.org1.example.com:9443
     volumes:
         - /var/run/:/host/var/run/
-        - ../crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls:/etc/hyperledger/fabric/tls
+        # - ../crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/msp:/etc/hyperledger/fabric/msp
+        # - ../crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls:/etc/hyperledger/fabric/tls
         - peer3.org1.example.com:/var/hyperledger/production
     ports:
       - 10051:10051
+
+
+      # /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp

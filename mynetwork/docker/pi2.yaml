@@ -44,7 +44,7 @@ services:
     ports:
       - 9051:9051
     networks:
-      -pi-network
+      - pi-network
 
   cli:
     container_name: cli

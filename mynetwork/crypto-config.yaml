@@ -6,6 +6,8 @@ OrdererOrgs:
     Domain: example.com
     Specs:
       - Hostname: orderer
+        SANS:
+          - localhost
 
 
 # ---------------------------------------------------------------------------

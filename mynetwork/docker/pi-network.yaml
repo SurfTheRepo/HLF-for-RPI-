@@ -6,7 +6,7 @@ networks:
 
 
 services:
-  orderer.example.com:
+  orderer:
     # container_name: orderer.example.com
     image: hyperledger/fabric-orderer:latest
     environment: 
@@ -48,7 +48,7 @@ services:
         constraints:
           - node.hostname == otto-UX360UAK
 
-  peer0.org1.example.com:
+  peer0:
     # container_name: peer0.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
@@ -90,7 +90,7 @@ services:
         constraints:
           - node.hostname == otto-UX360UAK
 
-  peer1.org1.example.com:
+  peer1:
     # container_name: peer1.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
@@ -132,7 +132,7 @@ services:
         constraints:
           - node.hostname == pi1
 
-  peer2.org1.example.com:
+  peer2:
     # container_name: peer2.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
@@ -175,7 +175,7 @@ services:
           - node.hostname == pi2
 
 
-  peer3.org1.example.com:
+  peer3:
     # container_name: peer3.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
@@ -234,11 +234,11 @@ services:
         - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations
         - ../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
     depends_on:
-      - orderer.example.com
-      - peer0.org1.example.com
-      - peer1.org1.example.com
-      - peer2.org1.example.com
-      - peer3.org1.example.com
+      - orderer
+      - peer0
+      - peer1
+      - peer2
+      - peer3
     networks:
       - pi-network
     deploy:

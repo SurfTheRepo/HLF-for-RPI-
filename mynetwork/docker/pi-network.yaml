@@ -7,7 +7,7 @@ networks:
 
 services:
   orderer.example.com:
-    container_name: orderer.example.com
+    # container_name: orderer.example.com
     image: hyperledger/fabric-orderer:latest
     environment: 
       - FABRIC_LOGGING_SPEC=INFO
@@ -37,7 +37,7 @@ services:
         - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
         - ../crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
         - ../crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
-        - orderer.example.com:/var/hyperledger/production/orderer
+        # - orderer.example.com:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
       - 7053:7053
@@ -49,7 +49,7 @@ services:
           - node.hostname == otto-UX360UAK
 
   peer0.org1.example.com:
-    container_name: peer0.org1.example.com
+    # container_name: peer0.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
       #Generic peer variables
@@ -78,7 +78,7 @@ services:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/fabric/tls
-        - peer0.org1.example.com:/var/hyperledger/production
+        # - peer0.org1.example.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: bash -c "peer node start > /home/logs/peer0.txt 2>&1"
     ports:
@@ -91,7 +91,7 @@ services:
           - node.hostname == otto-UX360UAK
 
   peer1.org1.example.com:
-    container_name: peer1.org1.example.com
+    # container_name: peer1.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
       #Generic peer variables
@@ -120,7 +120,7 @@ services:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/msp
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/tls
-        - peer1.org1.example.com:/var/hyperledger/production
+        # - peer1.org1.example.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: bash -c "peer node start > /home/logs/peer1.txt 2>&1"
     ports:
@@ -133,7 +133,7 @@ services:
           - node.hostname == pi1
 
   peer2.org1.example.com:
-    container_name: peer2.org1.example.com
+    # container_name: peer2.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
       #Generic peer variables
@@ -162,7 +162,7 @@ services:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/fabric/msp
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls:/etc/hyperledger/fabric/tls
-        - peer2.org1.example.com:/var/hyperledger/production
+        # - peer2.org1.example.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: bash -c "peer node start > /home/logs/peer2.txt 2>&1"
     ports:
@@ -176,7 +176,7 @@ services:
 
 
   peer3.org1.example.com:
-    container_name: peer3.org1.example.com
+    # container_name: peer3.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
       #Generic peer variables
@@ -205,7 +205,7 @@ services:
         - /var/run/:/host/var/run/
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/msp:/etc/hyperledger/fabric/msp
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls:/etc/hyperledger/fabric/tls
-        - peer3.org1.example.com:/var/hyperledger/production
+        # - peer3.org1.example.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: bash -c "peer node start > /home/logs/peer3.txt 2>&1"
     ports:
@@ -218,7 +218,7 @@ services:
           - node.hostname == pi3
 
   cli:
-    container_name: cli
+    # container_name: cli
     image: hyperledger/fabric-tools:latest
     tty: true
     stdin_open: true

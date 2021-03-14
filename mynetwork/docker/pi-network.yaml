@@ -80,7 +80,7 @@ services:
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/fabric/tls
         - peer0.org1.example.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
+    command: bash -c "peer node start > /home/logs/peer0.txt 2>&1"
     ports:
       - 7051:7051
     networks:
@@ -122,7 +122,7 @@ services:
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/tls
         - peer1.org1.example.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
+    command: bash -c "peer node start > /home/logs/peer1.txt 2>&1"
     ports:
       - 8051:8051
     networks:
@@ -164,7 +164,7 @@ services:
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls:/etc/hyperledger/fabric/tls
         - peer2.org1.example.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
+    command: bash -c "peer node start > /home/logs/peer2.txt 2>&1"
     ports:
       - 9051:9051
     networks:
@@ -207,7 +207,7 @@ services:
         - ../crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls:/etc/hyperledger/fabric/tls
         - peer3.org1.example.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
+    command: bash -c "peer node start > /home/logs/peer3.txt 2>&1"
     ports:
       - 10051:10051
     networks:

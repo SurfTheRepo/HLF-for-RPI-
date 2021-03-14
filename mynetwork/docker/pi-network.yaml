@@ -110,7 +110,7 @@ services:
       # Peer specific variabes
       - CORE_PEER_ID=peer1.org1.example.com
       - CORE_PEER_ADDRESS=peer1.org1.example.com:8051
-      - CORE_PEER_LISTENADDRESS=1.0.0.0:8051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
       - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:8052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
@@ -152,7 +152,7 @@ services:
       # Peer specific variabes
       - CORE_PEER_ID=peer2.org1.example.com
       - CORE_PEER_ADDRESS=peer2.org1.example.com:9051
-      - CORE_PEER_LISTENADDRESS=1.0.0.0:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
       - CORE_PEER_CHAINCODEADDRESS=peer2.org1.example.com:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
@@ -195,7 +195,7 @@ services:
       # Peer specific variabes
       - CORE_PEER_ID=peer3.org1.example.com
       - CORE_PEER_ADDRESS=peer3.org1.example.com:10051
-      - CORE_PEER_LISTENADDRESS=1.0.0.0:10051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
       - CORE_PEER_CHAINCODEADDRESS=peer3.org1.example.com:10052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051

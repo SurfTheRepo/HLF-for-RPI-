@@ -74,19 +74,45 @@ chmod +x pi3Up.sh pi3down.sh
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
+docker stack deploy --compose-file pi-network.yaml PiStack
 
 
 ~~~ Creating the channel(laptop)  ~~~
 
 ******************************************************************************************************************************************************
+OSN_TLS_CA_ROOT_CERT with the path and file name of the orderer organization TLS CA root certificate and intermediate certificate if using an intermediate TLS CA.
+export ORDERER_CA=${PWD}                   /crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+                                            crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt
 
-export ORDERER_CA=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
-export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+
+export $CAFILE=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt
+export $CLIENTCERT=${PWD}
+
+
+
+export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}  /crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
 export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
 
+- ORDERER_ADMIN_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+- ORDERER_ADMIN_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+- ORDERER_ADMIN_TLS_ROOTCAS=      [/var/hyperledger/orderer/tls/ca.crt]
+- ORDERER_ADMIN_TLS_CLIENTROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
 
-osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o 10.0.0.171/24:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+     crypto-config\ordererOrganizations\example.com\orderers\orderer.example.com\msp
+- ../crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
+- ../crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
+
+
+
+osnadmin channel join --channel-id mychannel --config-block ./channel-artifacts/mychannel.block -o localhost:7053 --ca-file /home/otto/Desktop/Thesis/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --client-cert /home/otto/Desktop/Thesis/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt --client-key /home/otto/Desktop/Thesis/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
+
+          \ordererOrganizations\example.com\orderers\orderer.example.com\msp\tlscacerts\tlsca.example.com-cert.pem
+--ca-file /ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+--client-cert /ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+--client-key /ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
+
+
+osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o 0.0.0.0:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 ******************************************************************************************************************************************************
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -86,7 +86,7 @@ export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/crypto-config/ordererOrganizations/exa
 export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
 
 
-osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o orderer.example.com:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o 10.0.0.171/24:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 ******************************************************************************************************************************************************
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

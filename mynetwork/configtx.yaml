@@ -177,7 +177,7 @@ Orderer: &OrdererDefaults
     OrdererType: etcdraft
 
     Addresses:
-        - orderer.example.com:7050
+        # - orderer.example.com:7050
 
     EtcdRaft:
         Consenters:

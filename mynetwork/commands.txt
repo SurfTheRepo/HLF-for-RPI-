@@ -107,14 +107,21 @@ export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/crypto-config/ordererOrganizations/e
 osnadmin channel join --channel-id mychannel --config-block ./channel-artifacts/mychannel.block -o localhost:7053 --ca-file /home/otto/Desktop/Thesis/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --client-cert /home/otto/Desktop/Thesis/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt --client-key /home/otto/Desktop/Thesis/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
 
           \ordererOrganizations\example.com\orderers\orderer.example.com\msp\tlscacerts\tlsca.example.com-cert.pem
---ca-file crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+--ca-file /home/otto/Desktop/Thesis/HLF-for-RPI-/mynetwork/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 --client-cert 
-export CLIENTCERT=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
 --client-key 
-export CLIENTKEY=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
+
+export ORDERERCA=/home/otto/Desktop/Thesis/HLF-for-RPI-/mynetwork/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+export CLIENTCERT=/home/otto/Desktop/Thesis/HLF-for-RPI-/mynetwork/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+export CLIENTKEY=/home/otto/Desktop/Thesis/HLF-for-RPI-/mynetwork/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
+
+
+osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o 0.0.0.0:7053 --ca-file /home/otto/Desktop/Thesis/HLF-for-RPI-/mynetwork/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --client-cert /home/otto/Desktop/Thesis/HLF-for-RPI-/mynetwork/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt --client-key /home/otto/Desktop/Thesis/HLF-for-RPI-/mynetwork/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
+
+
 osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o 0.0.0.0:7053 --ca-file "$CAFILE" --client-cert "$CLIENTCERT" --client-key "$CLIENTKEY"
 
-osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o 0.0.0.0:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o 0.0.0.0:7053 --ca-file "$ORDERERCA" --client-cert "$CLIENTCERT" --client-key "$CLIENTKEY"
 ******************************************************************************************************************************************************
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 

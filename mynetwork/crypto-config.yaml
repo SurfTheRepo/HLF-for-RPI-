@@ -8,7 +8,7 @@ OrdererOrgs:
     Specs:
       - Hostname: orderer
         SANS:
-          - 127.0.0.1
+          - 0.0.0.0
 
 
 # ---------------------------------------------------------------------------
@@ -22,6 +22,6 @@ PeerOrgs:
     Template:
       Count: 4
     SANS:
-      - 127.0.0.1
+      - 0.0.0.0
     Users:
       Count: 1

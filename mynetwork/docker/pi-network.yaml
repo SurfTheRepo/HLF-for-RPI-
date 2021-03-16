@@ -216,31 +216,31 @@ services:
         constraints:
           - node.hostname == pi3
 
-  cli:
-    # container_name: cli
-    image: hyperledger/fabric-tools:latest
-    tty: true
-    stdin_open: true
-    environment:
-      - GOPATH=/opt/gopath
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - FABRIC_LOGGING_SPEC=INFO
-      #- FABRIC_LOGGING_SPEC=DEBUG
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: /bin/bash
-    volumes:
-        - /var/run/:/host/var/run/
-        - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations
-        - ../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-    depends_on:
-      - orderer
-      - peer0
-      - peer1
-      - peer2
-      - peer3
-    networks:
-      - pi-network
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == otto-UX360UAK
+  # cli:
+  #   # container_name: cli
+  #   image: hyperledger/fabric-tools:latest
+  #   tty: true
+  #   stdin_open: true
+  #   environment:
+  #     - GOPATH=/opt/gopath
+  #     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+  #     - FABRIC_LOGGING_SPEC=INFO
+  #     #- FABRIC_LOGGING_SPEC=DEBUG
+  #   working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+  #   command: /bin/bash
+  #   volumes:
+  #       - /var/run/:/host/var/run/
+  #       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations
+  #       - ../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+  #   depends_on:
+  #     - orderer
+  #     - peer0
+  #     - peer1
+  #     - peer2
+  #     - peer3
+  #   networks:
+  #     - pi-network
+  #   deploy:
+  #     placement:
+  #       constraints:
+  #         - node.hostname == otto-UX360UAK

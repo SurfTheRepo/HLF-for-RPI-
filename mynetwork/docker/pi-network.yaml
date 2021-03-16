@@ -2,7 +2,7 @@ version: '3'
 
 networks:
   pi-network:
-    external: true 
+    # external: true 
 
 volumes:
   orderer.example.com:

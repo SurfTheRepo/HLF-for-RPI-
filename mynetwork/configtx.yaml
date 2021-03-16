@@ -39,7 +39,7 @@ Organizations:
                 Rule: "OR('OrdererMSP.member')"
             Admins:
                 Type: Signature
-                Rule: "OR('OrdererMSP.admin')"
+                Rule: "OR('OrdererMSP.member')"
         OrdererEndpoints:
             - orderer.example.com:7050
 
@@ -177,7 +177,7 @@ Orderer: &OrdererDefaults
     OrdererType: etcdraft
 
     Addresses:
-        # - orderer.example.com:7050
+        - orderer.example.com:7050
 
     EtcdRaft:
         Consenters:
@@ -273,8 +273,6 @@ Profiles:
 
     MultiPiEtcdRaft:
         <<: *ChannelDefaults
-        Capabilities:
-            <<: *ChannelCapabilities
         Orderer:
             <<: *OrdererDefaults
             Organizations:

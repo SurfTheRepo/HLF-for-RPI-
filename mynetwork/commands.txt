@@ -9,7 +9,7 @@ channelID=ottospis
 
 Generate crypto files:
 ******************************************************************************************************************************************************
-cryptogen generate --config=./crypto-config.yaml
+cryptogen generate --config=./crypto-config.yaml --output="crypto-config"
 ******************************************************************************************************************************************************
 
 Create the genesis block
@@ -86,6 +86,9 @@ export ORDERER_CA=${PWD}                   /crypto-config/ordererOrganizations/e
 
 
 export $CAFILE=${PWD}/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt
+
+/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
 export $CLIENTCERT=${PWD}
 
 

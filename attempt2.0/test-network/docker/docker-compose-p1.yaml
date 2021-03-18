@@ -9,6 +9,7 @@ volumes:
 
 networks:
   test:
+    external: true
 
 
 services:

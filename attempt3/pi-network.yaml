@@ -118,7 +118,7 @@ services:
         constraints:
           - node.hostname == otto-UX360UAK
 
-  peer0:
+  peer1:
     # container_name: peer0.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:

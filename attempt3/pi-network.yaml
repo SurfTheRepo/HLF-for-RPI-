@@ -47,9 +47,9 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-        - /home/otto/Desktop/Thesis/HLF-for-RPI-/mynetwork/channel-artifacts/pichannel.block:/var/hyperledger/orderer/orderer.genesis.block
-        - /home/otto/Desktop/Thesis/HLF-for-RPI-/mynetwork/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
-        - /home/otto/Desktop/Thesis/HLF-for-RPI-/mynetwork/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
+        - ./channel-artifacts/pichannel.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ./attempt3/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
+        - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
         - orderer.example.com:/var/hyperledger/production/orderer
     ports:
       - 7050:7050

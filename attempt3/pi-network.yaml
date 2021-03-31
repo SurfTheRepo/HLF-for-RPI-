@@ -65,7 +65,7 @@ services:
   peer0:
     # container_name: peer0.org1.example.com
     image: hyperledger/fabric-peer:latest
-    # environment:
+    environment:
     #   # Peer specific variabes
       
     #   - CORE_PEER_ID=peer0.org1.example.com
@@ -122,7 +122,7 @@ services:
   peer1:
     # container_name: peer0.org1.example.com
     image: hyperledger/fabric-peer:latest
-    # environment:
+    environment:
     #   # Peer specific variabes
       
     #   - CORE_PEER_ID=peer1.org1.example.com

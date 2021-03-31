@@ -63,7 +63,6 @@ services:
 
   # PEER TO GO ON LAPTOP
   peer0:
-    # container_name: peer0.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
     #   # Peer specific variabes
@@ -75,7 +74,7 @@ services:
     #   - CORE_PEER_ADDRESS=192.168.86.156:7051
     #   #stays 0000 because 
     #   - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-    #   - CORE_PEER_ADDRESSAUTODETECT=false
+      - CORE_PEER_ADDRESSAUTODETECT=true
     #   - CORE_PEER_PROFILE_ENABLED=false
       
     #   - CORE_PEER_LOCALMSPID=Org1MSP
@@ -120,7 +119,6 @@ services:
           - node.hostname == otto-UX360UAK
 
   peer1:
-    # container_name: peer0.org1.example.com
     image: hyperledger/fabric-peer:latest
     environment:
     #   # Peer specific variabes
@@ -132,7 +130,7 @@ services:
     #   - CORE_PEER_ADDRESS=192.168.86.74:7051
     #   #stays 0000 because 
     #   - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-    #   - CORE_PEER_ADDRESSAUTODETECT= false
+       - CORE_PEER_ADDRESSAUTODETECT=true
     #   - CORE_PEER_PROFILE_ENABLED=false
       
     #   - CORE_PEER_LOCALMSPID=Org1MSP

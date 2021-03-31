@@ -68,7 +68,7 @@ export CC_COLL_CONFIG=""
 export CLI_DELAY=3
 export MAX_RETRY=5
 export VERBOSE=false
-
+export CC_RUNTIME_LANGUAGE=golang
 
 
 

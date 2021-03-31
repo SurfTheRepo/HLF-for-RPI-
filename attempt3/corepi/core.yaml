@@ -33,7 +33,7 @@ peer:
     # peer address (see below). If specified peer address is invalid then it
     # will fallback to the auto detected IP (local IP) regardless of the peer
     # addressAutoDetect value.
-    chaincodeAddress: peer0.org1.example.com:7052
+    chaincodeAddress: 0.0.0.0:7052
 
     # When used as peer config, this represents the endpoint to other peers
     # in the same organization. For peers in other organization, see
@@ -167,7 +167,7 @@ peer:
         msgExpirationFactor: 20
         # This is an endpoint that is published to peers outside of the organization.
         # If this isn't set, the peer will not be known to other organizations.
-        externalEndpoint: 192.168.86.156:7051
+        externalEndpoint: 192.168.86.74:7051
         # Leader election service configuration
         election:
             # Longest time peer waits for stable membership during leader election startup (unit: second)

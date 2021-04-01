@@ -33,7 +33,7 @@ peer:
     # peer address (see below). If specified peer address is invalid then it
     # will fallback to the auto detected IP (local IP) regardless of the peer
     # addressAutoDetect value.
-    chaincodeAddress: 192.168.86.74:8052
+    # chaincodeAddress: 192.168.86.74:7052
 
     # When used as peer config, this represents the endpoint to other peers
     # in the same organization. For peers in other organization, see
@@ -86,7 +86,6 @@ peer:
         # Important: The endpoints here have to be endpoints of peers in the same
         # organization, because the peer would refuse connecting to these endpoints
         # unless they are in the same organization as the peer.
-        bootstrap: 192.168.86.156:7051
 
         # NOTE: orgLeader and useLeaderElection parameters are mutual exclusive.
         # Setting both to true would result in the termination of the peer

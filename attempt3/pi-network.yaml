@@ -98,8 +98,8 @@ services:
       # - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       # - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
 
-      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      # - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
+      # - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
@@ -155,8 +155,8 @@ services:
     #   - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
     #   - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
 
-      - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:7052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      # - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:7052
+      # - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock

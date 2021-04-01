@@ -1,0 +1,18 @@
+In bin_raspbian directory
+************************************************************************
+export PATH=${PWD}:$PATH
+************************************************************************
+
+export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
+export ORDERER_CA=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o 192.168.86.151:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+
+
+
+
+
+FETCH CHANNEL BLOCK
+
+peer channel fetch newest channelblock.block -c pichannel -o 192.168.86.156:7050 --tls --cafile "$ORDERER_CA" --certfile "$ORDERER_ADMIN_TLS_SIGN_CERT" --keyfile "$ORDERER_ADMIN_TLS_PRIVATE_KEY"

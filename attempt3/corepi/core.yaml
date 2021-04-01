@@ -20,12 +20,12 @@ peer:
 
     # The Address at local network interface this Peer will listen on.
     # By default, it will listen on all network interfaces
-    listenAddress: 0.0.0.0:7051
+    listenAddress: 0.0.0.0:8051
 
     # The endpoint this peer uses to listen for inbound chaincode connections.
     # If this is commented-out, the listen address is selected to be
     # the peer's address (see below) with port 7052
-    chaincodeListenAddress: 0.0.0.0:7052
+    chaincodeListenAddress: 0.0.0.0:8052
 
     # The endpoint the chaincode for this peer uses to connect to the peer.
     # If this is not specified, the chaincodeListenAddress address is selected.
@@ -33,13 +33,13 @@ peer:
     # peer address (see below). If specified peer address is invalid then it
     # will fallback to the auto detected IP (local IP) regardless of the peer
     # addressAutoDetect value.
-    chaincodeAddress: 0.0.0.0:7052
+    chaincodeAddress: 192.168.86.74:8052
 
     # When used as peer config, this represents the endpoint to other peers
     # in the same organization. For peers in other organization, see
     # gossip.externalEndpoint for more info.
     # When used as CLI config, this means the peer's endpoint to interact with
-    address: 192.168.86.74:7051
+    address: 192.168.86.74:8051
 
     # Whether the Peer should programmatically determine its address
     # This case is useful for docker containers.
@@ -167,7 +167,7 @@ peer:
         msgExpirationFactor: 20
         # This is an endpoint that is published to peers outside of the organization.
         # If this isn't set, the peer will not be known to other organizations.
-        externalEndpoint: 192.168.86.74:7051
+        externalEndpoint: 192.168.86.74:8051
         # Leader election service configuration
         election:
             # Longest time peer waits for stable membership during leader election startup (unit: second)
@@ -580,7 +580,7 @@ chaincode:
     # In dev mode, user runs the chaincode after starting peer from
     # command line on local machine.
     # In net mode, peer will run chaincode in a docker container.
-    mode: dev
+    mode: net
 
     # keepalive in seconds. In situations where the communication goes through a
     # proxy that does not support keep-alive, this parameter will maintain connection

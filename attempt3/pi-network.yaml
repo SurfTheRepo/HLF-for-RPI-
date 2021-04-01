@@ -83,7 +83,7 @@ services:
       # - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
 
       #Generic peer variables
-      - CORE_PEER_ADDRESSAUTODETECT=true
+      # - CORE_PEER_ADDRESSAUTODETECT=true
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       # the following setting starts chaincode containers on the same
       # bridge network as the peers
@@ -98,8 +98,8 @@ services:
       # - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       # - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
 
-      # - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
-      # - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
@@ -130,7 +130,7 @@ services:
     #   - CORE_PEER_ADDRESS=192.168.86.74:7051
     #   #stays 0000 because 
     #   - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_ADDRESSAUTODETECT=true
+      # - CORE_PEER_ADDRESSAUTODETECT=true
     #   - CORE_PEER_PROFILE_ENABLED=false
       
     #   - CORE_PEER_LOCALMSPID=Org1MSP
@@ -155,8 +155,8 @@ services:
     #   - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
     #   - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
 
-    #   - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:7052
-    #   - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock

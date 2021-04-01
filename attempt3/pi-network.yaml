@@ -59,7 +59,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.hostname == otto-UX360UAK
+          - node.hostname == pi2
 
   # PEER TO GO ON LAPTOP
   peer0:

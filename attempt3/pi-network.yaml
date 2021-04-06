@@ -167,7 +167,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
-      - 8051:8051
+      - 8051:7051
     networks:
       - pi-network
     deploy:

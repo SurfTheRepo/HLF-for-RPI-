@@ -111,6 +111,7 @@ services:
     command: peer node start
     ports:
       - 7051:7051
+      - 7052:7052
     networks:
       - pi-network
     deploy:
@@ -167,7 +168,9 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
-      - 8051:7051
+      - 8051:8051
+      - 8052:8052
+
     networks:
       - pi-network
     deploy:

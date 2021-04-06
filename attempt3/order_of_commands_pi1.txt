@@ -6,6 +6,7 @@ export PATH=${PWD}:$PATH
 THEN DO CRYPTOGEN COMMAND IN LAPTOP\
 
 
+
 export FABRIC_CFG_PATH=${PWD}/corepi/
 export CORE_PEER_LOCALMSPID="Org1MSP"
 export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
@@ -13,7 +14,6 @@ export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.examp
 export CORE_PEER_ADDRESS=192.168.86.74:7051
 
 
-export CORE_PEER_ADDRESS=192.168.86.74:7051
 
 export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
 export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key

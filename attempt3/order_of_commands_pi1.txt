@@ -23,7 +23,7 @@ export ORDERER_CA=${PWD}/organizations/ordererOrganizations/example.com/orderers
 
 FETCH CHANNEL BLOCK
 
-peer channel fetch newest channelblock.block -c pichannel -o 192.168.86.156:7050 --tls --cafile "$ORDERER_CA" --certfile "$ORDERER_ADMIN_TLS_SIGN_CERT" --keyfile "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+peer channel fetch newest channelblock.block -c pichannel -o 192.168.86.151:7050 --tls --cafile "$ORDERER_CA" --certfile "$ORDERER_ADMIN_TLS_SIGN_CERT" --keyfile "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 
 DEPLOY CHAINCODE
 *************************************************************************************************************************************

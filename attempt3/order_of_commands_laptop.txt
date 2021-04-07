@@ -39,17 +39,7 @@ export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.examp
 export CORE_PEER_ADDRESS=192.168.86.156:7051
 export FABRIC_CFG_PATH=${PWD}/corelaptop/
 
-export CORE_PEER_LOCALMSPID="Org1MSP"
-export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
-export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
-export CORE_PEER_ADDRESS=192.168.86.74:7051
-export FABRIC_CFG_PATH=${PWD}/corepi/
-
-
-
-
-
-
+#export CORE_PEER_ADDRESS=localhost:7051
 
 $$$$$ NEEDS CORE.YAML HERE FOR SOME REASON, RESEARCHING WHY $$$$$
 NOW JOIN PEER ON LAPTOP TO CHANNEL
@@ -94,15 +84,12 @@ peer lifecycle chaincode queryinstalled >&log.txt
 
 PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" log.txt)
 
-peer lifecycle chaincode approveformyorg -o 192.168.86.151:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "$ORDERER_CA" --channelID $CHANNEL_NAME --name ${CC_NAME} --version ${CC_VERSION} --package-id ${PACKAGE_ID} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
+peer lifecycle chaincode approveformyorg -o 192.168.86.156:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "$ORDERER_CA" --channelID $CHANNEL_NAME --name ${CC_NAME} --version ${CC_VERSION} --package-id ${PACKAGE_ID} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
 
 export PEER1_ROOT_Cert=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 export PEER2_ROOT_Cert=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
 
-
-peer lifecycle chaincode checkcommitreadiness --channelID $CHANNEL_NAME --name ${CC_NAME} --version ${CC_VERSION} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG} --output json 
-
-peer lifecycle chaincode commit -o 192.168.86.151:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "$ORDERER_CA" --channelID $CHANNEL_NAME --name ${CC_NAME} --peerAddresses 192.168.86.156:7051 --tlsRootCertFiles $PEER1_ROOT_Cert  --peerAddresses 192.168.86.74:8051 --tlsRootCertFiles $PEER2_ROOT_Cert --version ${CC_VERSION} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
+peer lifecycle chaincode commit -o 192.168.86.156:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "$ORDERER_CA" --channelID $CHANNEL_NAME --name ${CC_NAME} --peerAddresses 192.168.86.156:7051  --peerAddresses 192.168.86.74:7051 --tlsRootCertFiles $PEER1_ROOT_Cert  --tlsRootCertFiles $PEER2_ROOT_Cert --version ${CC_VERSION} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
 
 peer lifecycle chaincode querycommitted --channelID $CHANNEL_NAME --name ${CC_NAME} 
 

@@ -67,14 +67,14 @@ services:
     environment:
     #   # Peer specific variabes
       
-      # - CORE_PEER_ID=peer0.org1.example.com
+    #   - CORE_PEER_ID=peer0.org1.example.com
     #   # Used to name chaincode containers potentially
-      # - CORE_PEER_NETWORKID=dev
+    #   - CORE_PEER_NETWORKID=dev
     #   # OTher peers IN org use this to find this peer
-      # - CORE_PEER_ADDRESS=192.168.86.156:7051
+    #   - CORE_PEER_ADDRESS=192.168.86.156:7051
     #   #stays 0000 because 
-      # - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_PROFILE_ENABLED=true
+    #   - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+    #   - CORE_PEER_PROFILE_ENABLED=false
       
     #   - CORE_PEER_LOCALMSPID=Org1MSP
 
@@ -98,8 +98,8 @@ services:
       # - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       # - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
 
-      # - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
-      # - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
@@ -111,7 +111,6 @@ services:
     command: peer node start
     ports:
       - 7051:7051
-      - 7052:7052
     networks:
       - pi-network
     deploy:
@@ -132,7 +131,7 @@ services:
     #   #stays 0000 because 
     #   - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
       # - CORE_PEER_ADDRESSAUTODETECT=true
-      - CORE_PEER_PROFILE_ENABLED=true
+    #   - CORE_PEER_PROFILE_ENABLED=false
       
     #   - CORE_PEER_LOCALMSPID=Org1MSP
 
@@ -156,21 +155,19 @@ services:
     #   - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
     #   - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
 
-      # - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:7052
-      # - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
         - /home/pi/HLF-for-RPI-/attempt3/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/msp
         - /home/pi/HLF-for-RPI-/attempt3/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/tls
         - peer1.org1.example.com:/var/hyperledger/production
-        - /home/pi/HLF-for-RPI-/attempt3/corepi1:/etc/hyperledger/fabric
+        - /home/pi/HLF-for-RPI-/attempt3/corepi:/etc/hyperledger/fabric
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
-      - 8051:8051
-      - 8052:8052
-
+      - 8051:7051
     networks:
       - pi-network
     deploy:

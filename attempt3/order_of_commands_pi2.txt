@@ -9,6 +9,10 @@ export ORDERER_CA=${PWD}/organizations/ordererOrganizations/example.com/orderers
 
 osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o 192.168.86.151:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 
+
+osnadmin channel list -o 192.168.86.151:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+
+
 export FABRIC_CFG_PATH=${PWD}/corepi/
 
 export CORE_PEER_LOCALMSPID="Org1MSP"

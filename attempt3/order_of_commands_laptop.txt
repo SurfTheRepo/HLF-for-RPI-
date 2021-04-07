@@ -39,7 +39,7 @@ export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.examp
 export CORE_PEER_ADDRESS=192.168.86.156:7051
 export FABRIC_CFG_PATH=${PWD}/corelaptop/
 
-#export CORE_PEER_ADDRESS=localhost:7051
+export CORE_PEER_ADDRESS=localhost:7051
 
 $$$$$ NEEDS CORE.YAML HERE FOR SOME REASON, RESEARCHING WHY $$$$$
 NOW JOIN PEER ON LAPTOP TO CHANNEL

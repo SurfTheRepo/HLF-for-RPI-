@@ -14,7 +14,7 @@ volumes:
 services:
   orderer:
     # container_name: orderer.example.com
-    image: hyperledger/fabric-orderer:latest
+    image: hyperledger/fabric-orderer:2.3.0
     environment: 
       - FABRIC_LOGGING_SPEC=INFO
 
@@ -64,7 +64,7 @@ services:
   # PEER TO GO ON LAPTOP
   peer0:
     # container_name: peer0.org1.example.com
-    image: hyperledger/fabric-peer:latest
+    image: hyperledger/fabric-peer:2.3.0
     environment:
       # Peer specific variabes
       
@@ -122,7 +122,7 @@ services:
 
   peer1:
     # container_name: peer0.org1.example.com
-    image: hyperledger/fabric-peer:latest
+    image: hyperledger/fabric-peer:arm64-2.3
     environment:
       # Peer specific variabes
       

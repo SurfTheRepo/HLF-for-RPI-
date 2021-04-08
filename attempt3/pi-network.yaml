@@ -122,7 +122,7 @@ services:
 
   peer1:
     # container_name: peer0.org1.example.com
-    image: hyperledger/fabric-peer:arm64-2.3
+    image: ottoflaherty/fabric-peer:arm64-2.3
     environment:
       # Peer specific variabes
       

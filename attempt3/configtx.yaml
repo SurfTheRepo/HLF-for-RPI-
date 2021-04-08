@@ -158,7 +158,7 @@ Application: &ApplicationDefaults
             Rule: "MAJORITY Admins"
         LifecycleEndorsement:
             Type: ImplicitMeta
-            Rule: "ANY Endorsement"
+            Rule: "MAJORITY Endorsement"
         Endorsement:
             Type: ImplicitMeta
             Rule: "MAJORITY Endorsement"

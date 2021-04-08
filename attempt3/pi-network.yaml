@@ -76,13 +76,13 @@ services:
       #stays 0000 because 
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
       - CORE_PEER_ADDRESSAUTODETECT= false
-      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_PROFILE_ENABLED=true
       
       - CORE_PEER_LOCALMSPID=Org1MSP
 
       # GOSSIP SHIT
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=192.168.86.74:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=192.168.86.156:7051
 
       #Generic peer variables
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
@@ -111,7 +111,8 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
-      - 8051:7051
+      - 7051:7051
+      - 7052:7052
     networks:
       - pi-network
     deploy:
@@ -129,17 +130,17 @@ services:
       # Used to name chaincode containers potentially
       - CORE_PEER_NETWORKID=dev
       # OTher peers IN org use this to find this peer
-      - CORE_PEER_ADDRESS=192.168.86.74:7051
+      - CORE_PEER_ADDRESS=192.168.86.74:8051
       #stays 0000 because 
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_ADDRESSAUTODETECT= false
-      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_ADDRESSAUTODETECT=false
+      - CORE_PEER_PROFILE_ENABLED=true
       
       - CORE_PEER_LOCALMSPID=Org1MSP
 
       # GOSSIP SHIT
       - CORE_PEER_GOSSIP_BOOTSTRAP=192.168.86.156:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=192.168.86.156:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=192.168.86.74:8051
 
       #Generic peer variables
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
@@ -156,8 +157,8 @@ services:
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
 
-      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_CHAINCODEADDRESS=192.168.86.74:8052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
       
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
@@ -168,7 +169,8 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
-      - 7051:7051
+      - 8051:8051
+      - 8052:8052
     networks:
       - pi-network
     deploy:

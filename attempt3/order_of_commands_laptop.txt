@@ -39,16 +39,26 @@ export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.examp
 export CORE_PEER_ADDRESS=192.168.86.156:7051
 export FABRIC_CFG_PATH=${PWD}/corelaptop/
 
-export CORE_PEER_ADDRESS=localhost:7051
+export CORE_PEER_LOCALMSPID="Org1MSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+export CORE_PEER_ADDRESS=192.168.86.74:7051
+export FABRIC_CFG_PATH=${PWD}/corepi/
+
+
+
+
+
+
 
 $$$$$ NEEDS CORE.YAML HERE FOR SOME REASON, RESEARCHING WHY $$$$$
 NOW JOIN PEER ON LAPTOP TO CHANNEL
 *************************************************************************************************************************************
 peer channel join -b ./channel-artifacts/pichannel.block 
 
-THIS WILL CHECK IF CONNECTION WORKS (REPLACE PISTACK_..... WITH NAME OF PEER CONTAINER)
+THIS WILL CHECK IF CONNECTION WORKS 
 *************************************************************************************************************************************
-docker exec PiStack_peer0.1.k26y6rvs1oh5rn2z29hsdg39n peer channel getinfo -c pichannel
+peer channel getinfo -c pichannel
 
 
 
@@ -63,11 +73,42 @@ export CC_SRC_LANGUAGE=go
 export CC_VERSION="1.0"
 export CC_SEQUENCE=1
 export CC_INIT_FCN="NA"
-export CC_END_POLICY="NA"
-export CC_COLL_CONFIG="NA"
+export CC_END_POLICY=""
+export CC_COLL_CONFIG=""
 export CLI_DELAY=3
 export MAX_RETRY=5
 export VERBOSE=false
+export CC_RUNTIME_LANGUAGE=golang
+export CORE_PEER_TLS_ENABLED=true
+
+pushd $CC_SRC_PATH
+GO111MODULE=on go mod vendor
+popd
+
+peer lifecycle chaincode package ${CC_NAME}.tar.gz --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} --label ${CC_NAME}_${CC_VERSION}
+
+peer lifecycle chaincode install ${CC_NAME}.tar.gz
+
+peer lifecycle chaincode queryinstalled >&log.txt
+
+PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" log.txt)
+
+peer lifecycle chaincode approveformyorg -o 192.168.86.156:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "$ORDERER_CA" --channelID $CHANNEL_NAME --name ${CC_NAME} --version ${CC_VERSION} --package-id ${PACKAGE_ID} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
+
+export PEER1_ROOT_Cert=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+export PEER2_ROOT_Cert=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
 
 
-deployCC.sh $CHANNEL_NAME $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $CLI_DELAY $MAX_RETRY $VERBOSE
+peer lifecycle chaincode checkcommitreadiness --channelID $CHANNEL_NAME --name ${CC_NAME} --version ${CC_VERSION} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG} --output json 
+
+peer lifecycle chaincode commit -o 192.168.86.156:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "$ORDERER_CA" -C $CHANNEL_NAME --name ${CC_NAME} --peerAddresses 192.168.86.156:8051   --peerAddresses 192.168.86.74:7051 --tlsRootCertFiles $PEER1_ROOT_Cert --tlsRootCertFiles $PEER2_ROOT_Cert --version ${CC_VERSION} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
+
+peer lifecycle chaincode querycommitted --channelID $CHANNEL_NAME --name ${CC_NAME} 
+
+peer chaincode invoke -o 192.168.86.156:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C pichannel -n basic --peerAddresses 192.168.86.156:7051  --peerAddresses 192.168.86.74:7051 --tlsRootCertFiles $PEER1_ROOT_Cert  --tlsRootCertFiles $PEER2_ROOT_Cert  -c '{"function":"InitLedger","Args":[]}'
+
+
+
+
+
+peer lifecycle chaincode commit -o 192.168.86.156:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile /home/otto/Desktop/Thesis/HLF-for-RPI-/attempt3/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID pichannel --name basic --peerAddresses 192.168.86.156:7051 --peerAddresses 192.168.86.74:8051 --tlsRootCertFiles /home/otto/Desktop/Thesis/HLF-for-RPI-/attempt3/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --tlsRootCertFiles /home/otto/Desktop/Thesis/HLF-for-RPI-/attempt3/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt --version 1.0 --sequence 1

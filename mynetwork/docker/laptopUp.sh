@@ -1,1 +1,0 @@
-docker-compose -f laptop.yaml up -d

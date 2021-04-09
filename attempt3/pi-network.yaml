@@ -114,7 +114,9 @@ services:
       - 7051:7051
       - 7052:7052
     networks:
-      - pi-network
+      pi-network:
+        aliases:
+          - peer0.org1.example.com
     deploy:
       placement:
         constraints:
@@ -172,7 +174,9 @@ services:
       - 8051:8051
       - 8052:8052
     networks:
-      - pi-network
+      pi-network:
+        aliases:
+          - peer1.org1.example.com
     deploy:
       placement:
         constraints:

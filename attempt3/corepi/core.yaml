@@ -523,7 +523,7 @@ chaincode:
         name:
 
     # Generic builder environment, suitable for most chaincode types
-    builder: $(DOCKER_NS)/fabric-ccenv:$(TWO_DIGIT_VERSION)
+    builder: ottoflaherty/fabric-ccenv:arm64-2.3
 
     # Enables/disables force pulling of the base docker images (listed below)
     # during user chaincode instantiation.
@@ -532,7 +532,7 @@ chaincode:
 
     golang:
         # golang will never need more than baseos
-        runtime: $(DOCKER_NS)/fabric-baseos:$(TWO_DIGIT_VERSION)
+        runtime: ottoflaherty/fabric-baseos:arm64-2.3
 
         # whether or not golang chaincode should be linked dynamically
         dynamicLink: false

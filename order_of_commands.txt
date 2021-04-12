@@ -1,92 +1,109 @@
+Clone the repository to both the Pi & laptop, for the pi clone it to the 
+home directory, or if using a different location must change the volumes
+in Pi-network.yaml
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+TO CHECK PROGRESS & SEE LOGS, THESE COMMANDS MAY BE USEFUL:
+docker ps 
+docker logs <CONTAINER NAME>
+docker service ls
+docker service ps <SERVICE NAME> --no-trunc
+docker stack ps PiStack
+
+IN A SEPERATE TERMINAL ON THE LAPTOP THIS COMMAND WILL SHOW OUTPUT OF ALL 
+DOCKER CONTAINERS IN ONE PLACE
+./monitordocker.sh 
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+LAPTOP
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+
 In bin_linux directory
 ************************************************************************
 export PATH=${PWD}:$PATH
 ************************************************************************
 
-In attempt3 directory
+In HLF-FOR-RPI- directory
 ************************************************************************
+docker volume prune
 cryptogen generate --config=./crypto-config.yaml --output="organizations"
+configtxgen -profile TwoOrgsApplicationGenesis -outputBlock ./channel-artifacts/pichannel.block -channelID pichannel
+
+git add -A
+git commit -m 'New Crypto'
+git push
 ************************************************************************
 
-Create the genesis block
-******************************************************************************************************************************************************
-configtxgen -profile TwoOrgsApplicationGenesis -outputBlock ./channel-artifacts/pichannel.block -channelID pichannel
-******************************************************************************************************************************************************
- 
-AFTER THE TWO ABOVE COMMANDS, COMMIT& PUSH TO THE REPO AND THEN PULL THE REPO ON THE PI TO SHARE THE CERTS
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+Pi1
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
 
-START THE DOCKER CONTAINERS
+In bin_raspbian directory
+************************************************************************
+export PATH=${PWD}:$PATH
+************************************************************************
+
+In HLF-FOR-RPI- directory
+************************************************************************
+git pull
+docker volume prune
+************************************************************************
+
+
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+LAPTOP
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+
+In HLF-FOR-RPI- directory
 ******************************************************************************
 docker stack deploy --compose-file pi-network.yaml PiStack
 
-NOW ADD in PATH TO ADMIN ORDERER MSP TLS ETC
-************************************************************************************************************************************
 
 export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
 export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
 export ORDERER_CA=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
-NOW CREATE A CHANNEL USING OSNADMIN WITH THE CHANNELBLOCK CREATED
-*************************************************************************************************************************************
-osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o orderer.example.com:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
+osnadmin channel join --channel-id pichannel --config-block ./channel-artifacts/pichannel.block -o 192.168.86.156:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 
-
-NOW SET PEER ADDRESS, MSP, TLS
-*************************************************************************************************************************************
-
-LAPTOP ENVIROS
-*************************************************************************************************************************************
 export CORE_PEER_LOCALMSPID="Org1MSP"
 export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
 export CORE_PEER_ADDRESS=192.168.86.156:7051
 export FABRIC_CFG_PATH=${PWD}/corelaptop/
 
-
-
-export CORE_PEER_LOCALMSPID="Org1MSP"
-export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
-export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
-export CORE_PEER_ADDRESS=peer0.org1.example.com:7051
-export FABRIC_CFG_PATH=${PWD}/corelaptop/
-
-
 peer channel join -b ./channel-artifacts/pichannel.block 
-
-PI 1 ENVIROS
-*************************************************************************************************************************************
-export CORE_PEER_LOCALMSPID="Org1MSP"
-export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
-export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
-export CORE_PEER_ADDRESS=192.168.86.74:8051
-export FABRIC_CFG_PATH=${PWD}/corepi/
-
-PI 2 ENVIROS
-*************************************************************************************************************************************
-export CORE_PEER_LOCALMSPID="Org1MSP"
-export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
-export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
-export CORE_PEER_ADDRESS=192.168.86.74:8051
-export FABRIC_CFG_PATH=${PWD}/corepi/
-
-
-
-
-
-$$$$$ NEEDS CORE.YAML HERE FOR SOME REASON, RESEARCHING WHY $$$$$
-NOW JOIN PEER ON LAPTOP TO CHANNEL
-*************************************************************************************************************************************
-peer channel join -b ./channel-artifacts/pichannel.block 
-
-THIS WILL CHECK IF CONNECTION WORKS 
-*************************************************************************************************************************************
 peer channel getinfo -c pichannel
 
 
+export CORE_PEER_LOCALMSPID="Org1MSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+export CORE_PEER_ADDRESS=192.168.86.74:8051
+export FABRIC_CFG_PATH=${PWD}/corepi/
 
-DEPLOY CHAINCODE
-*************************************************************************************************************************************
+peer channel join -b ./channel-artifacts/pichannel.block 
+peer channel getinfo -c pichannel
 
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+Pi1
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+
+In HLF-FOR-RPI- directory
+******************************************************************************
+export CORE_PEER_LOCALMSPID="Org1MSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+export CORE_PEER_ADDRESS=192.168.86.74:8051
+export FABRIC_CFG_PATH=${PWD}/corepi/
+
+peer channel getinfo -c pichannel
+
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+LAPTOP
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+
+In HLF-FOR-RPI- directory
+******************************************************************************
 
 export CHANNEL_NAME=pichannel
 export CC_NAME=basic
@@ -105,7 +122,7 @@ export CORE_PEER_TLS_ENABLED=true
 export PEER0_ROOT_Cert=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 export PEER1_ROOT_Cert=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
 export PEER0_ADDR=192.168.86.156:7051
-export PEER1_ADDR=192.168.86.74:7051
+export PEER1_ADDR=192.168.86.74:8051
 export ORD_ADDR=192.168.86.156:7050
 
 
@@ -115,9 +132,25 @@ popd
 
 peer lifecycle chaincode package ${CC_NAME}.tar.gz --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} --label ${CC_NAME}_${CC_VERSION}
 
+
+export CORE_PEER_LOCALMSPID="Org1MSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+export CORE_PEER_ADDRESS=192.168.86.156:7051
+export FABRIC_CFG_PATH=${PWD}/corelaptop/
+
+peer lifecycle chaincode install ${CC_NAME}.tar.gz
+peer lifecycle chaincode queryinstalled >&log.txt
+
+export CORE_PEER_LOCALMSPID="Org1MSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+export CORE_PEER_ADDRESS=192.168.86.74:8051
+export FABRIC_CFG_PATH=${PWD}/corepi/
+
 peer lifecycle chaincode install ${CC_NAME}.tar.gz
 
-peer lifecycle chaincode queryinstalled >&log.txt
+peer lifecycle chaincode queryinstalled
 
 PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" log.txt)
 
@@ -125,16 +158,12 @@ peer lifecycle chaincode approveformyorg -o $ORD_ADDR --ordererTLSHostnameOverri
 
 peer lifecycle chaincode checkcommitreadiness --channelID $CHANNEL_NAME --name ${CC_NAME} --version ${CC_VERSION} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG} --output json 
 
-
 peer lifecycle chaincode commit -o $ORD_ADDR --ordererTLSHostnameOverride orderer.example.com --tls --cafile "$ORDERER_CA" -C $CHANNEL_NAME --name ${CC_NAME} --peerAddresses $PEER0_ADDR  --peerAddresses $PEER1_ADDR --tlsRootCertFiles $PEER0_ROOT_Cert --tlsRootCertFiles $PEER1_ROOT_Cert --version ${CC_VERSION} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
 
 peer lifecycle chaincode querycommitted --channelID $CHANNEL_NAME --name ${CC_NAME} 
 
 peer chaincode invoke -o $ORD_ADDR --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C pichannel -n basic --peerAddresses $PEER0_ADDR  --peerAddresses $PEER1_ADDR --tlsRootCertFiles $PEER0_ROOT_Cert  --tlsRootCertFiles $PEER1_ROOT_Cert  -c '{"function":"InitLedger","Args":[]}'
 
-
-
 peer chaincode query -C pichannel -n basic -c '{"Args":["GetAllAssets"]}'
-
 
 peer chaincode invoke -o $ORD_ADDR --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C pichannel -n basic --peerAddresses $PEER0_ADDR --tlsRootCertFiles $PEER0_ROOT_Cert --peerAddresses $PEER1_ADDR --tlsRootCertFiles $PEER1_ROOT_Cert -c '{"function":"TransferAsset","Args":["asset6","Christopher"]}'

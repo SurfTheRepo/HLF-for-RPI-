@@ -1,0 +1,2 @@
+Installed chaincodes on peer:
+Package ID: basic_1.0:0788b09dbb0681d835dad50a770a6f51aabdf53f0ad5da4135d776ad585ea48d, Label: basic_1.0

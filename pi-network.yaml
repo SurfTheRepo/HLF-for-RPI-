@@ -14,7 +14,7 @@ volumes:
 services:
   orderer:
     # container_name: orderer.example.com
-    image: hyperledger/fabric-orderer:2.3
+    image: ottoflaherty/fabric-orderer:arm64-2.3
     environment: 
       - FABRIC_LOGGING_SPEC=INFO
 
@@ -47,19 +47,21 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-        - ./channel-artifacts/pichannel.block:/var/hyperledger/orderer/orderer.genesis.block
-        - ./organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
-        - ./organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
+        - /home/pi/HLF-for-RPI-/channel-artifacts/pichannel.block:/var/hyperledger/orderer/orderer.genesis.block
+        - /home/pi/HLF-for-RPI-/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
+        - /home/pi/HLF-for-RPI-/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
         - orderer.example.com:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
       - 7053:7053
     networks:
-      - pi-network
+      pi-network:
+        aliases:
+          - orderer.example.com
     deploy:
       placement:
         constraints:
-          - node.hostname == otto-UX360UAK
+          - node.hostname == pi3
 
   # PEER TO GO ON LAPTOP
   peer0:

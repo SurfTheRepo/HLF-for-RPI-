@@ -75,7 +75,7 @@ services:
       # Used to name chaincode containers potentially
       - CORE_PEER_NETWORKID=dev
       # OTher peers IN org use this to find this peer
-      - CORE_PEER_ADDRESS=192.168.86.156:7051
+      - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
       #stays 0000 because 
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
       - CORE_PEER_ADDRESSAUTODETECT= false
@@ -136,7 +136,7 @@ services:
       # Used to name chaincode containers potentially
       - CORE_PEER_NETWORKID=dev
       # OTher peers IN org use this to find this peer
-      - CORE_PEER_ADDRESS=192.168.86.74:8051
+      - CORE_PEER_ADDRESS=peer1.org1.example.com:8051
       #stays 0000 because 
       - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
       - CORE_PEER_ADDRESSAUTODETECT=false
@@ -198,7 +198,7 @@ services:
       # Used to name chaincode containers potentially
       - CORE_PEER_NETWORKID=dev
       # OTher peers IN org use this to find this peer
-      - CORE_PEER_ADDRESS=192.168.86.151:9051
+      - CORE_PEER_ADDRESS=peer2.org1.example.com:9051
       #stays 0000 because 
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
       - CORE_PEER_ADDRESSAUTODETECT=false

@@ -81,7 +81,6 @@ services:
       - CORE_PEER_ADDRESSAUTODETECT= false
       - CORE_PEER_PROFILE_ENABLED=true
       
-    #   - CORE_PEER_LOCALMSPID=Org1MSP
 
       # GOSSIP SHIT
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:8051 peer1.org1.example.com:8051
@@ -97,14 +96,10 @@ services:
       # - FABRIC_LOGGING_SPEC=INFO
       #- FABRIC_LOGGING_SPEC=DEBUG
 
-      # - CORE_PEER_TLS_ENABLED=true
-      # - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-      # - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-      # - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-
-      # - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
-      # - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       
+      - CORE_OPERATIONS_LISTENADDRESS=peer0.org1.example.com:9443
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
         - ./organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp
@@ -159,14 +154,11 @@ services:
     #   - FABRIC_LOGGING_SPEC=INFO
     #   #- FABRIC_LOGGING_SPEC=DEBUG
 
-    #   - CORE_PEER_TLS_ENABLED=true
-    #   - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-    #   - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-    #   - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-
       - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:8052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
       
+      - CORE_OPERATIONS_LISTENADDRESS=peer1.org1.example.com:9443
+
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
         - /home/pi/HLF-for-RPI-/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/msp
@@ -218,17 +210,11 @@ services:
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=pi-network
       - CORE_VM_DOCKER_ATTACHSTDOUT=true
 
-    #   - FABRIC_LOGGING_SPEC=INFO
-    #   #- FABRIC_LOGGING_SPEC=DEBUG
-
-    #   - CORE_PEER_TLS_ENABLED=true
-    #   - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-    #   - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-    #   - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-
       - CORE_PEER_CHAINCODEADDRESS=peer2.org1.example.com:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
       
+      - CORE_OPERATIONS_LISTENADDRESS=peer2.org1.example.com:9443
+
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
         - /home/pi/HLF-for-RPI-/organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/fabric/msp
@@ -249,113 +235,3 @@ services:
       placement:
         constraints:
           - node.hostname == pi2
-
-  # peer2:
-  #   # container_name: peer2.org1.example.com
-  #   image: hyperledger/fabric-peer:latest
-  #   environment:
-  #     #Generic peer variables
-  #     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-  #     # the following setting starts chaincode containers on the same
-  #     # bridge network as the peers
-  #     # https://docs.docker.com/compose/networking/
-  #     - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=pi-network
-  #     - FABRIC_LOGGING_SPEC=INFO
-  #     #- FABRIC_LOGGING_SPEC=DEBUG
-  #     - CORE_PEER_TLS_ENABLED=true
-  #     - CORE_PEER_PROFILE_ENABLED=true
-  #     - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-  #     - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-  #     - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-  #     # Peer specific variabes
-  #     - CORE_PEER_ID=peer2.org1.example.com
-  #     - CORE_PEER_ADDRESS=peer2.org1.example.com:9051
-  #     - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
-  #     - CORE_PEER_CHAINCODEADDRESS=peer2.org1.example.com:9052
-  #     - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
-  #     - CORE_PEER_LOCALMSPID=Org1MSP
-  #   volumes:
-  #       - /var/run/:/host/var/run/
-  #       - /home/pi/HLF-for-RPI-/mynetwork/crypto-config/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/fabric/msp
-  #       - /home/pi/HLF-for-RPI-/mynetwork/crypto-config/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls:/etc/hyperledger/fabric/tls
-  #       - peer2.org1.example.com:/var/hyperledger/production
-  #   working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-  #   command: peer node start 
-  #   ports:
-  #     - 9051:9051
-  #   networks:
-  #     - pi-network
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.hostname == pi2
-
-
-  # peer3:
-  #   # container_name: peer3.org1.example.com
-  #   image: hyperledger/fabric-peer:latest
-  #   environment:
-  #     #Generic peer variables
-  #     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-  #     # the following setting starts chaincode containers on the same
-  #     # bridge network as the peers
-  #     # https://docs.docker.com/compose/networking/
-  #     - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=pi-network
-  #     - FABRIC_LOGGING_SPEC=INFO
-  #     #- FABRIC_LOGGING_SPEC=DEBUG
-  #     - CORE_PEER_TLS_ENABLED=true
-  #     - CORE_PEER_PROFILE_ENABLED=true
-  #     - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-  #     - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-  #     - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-  #     # Peer specific variabes
-  #     - CORE_PEER_ID=peer3.org1.example.com
-  #     - CORE_PEER_ADDRESS=peer3.org1.example.com:10051
-  #     - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
-  #     - CORE_PEER_CHAINCODEADDRESS=peer3.org1.example.com:10052
-  #     - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
-  #     - CORE_PEER_LOCALMSPID=Org1MSP
-  #   volumes:
-  #       - /var/run/:/host/var/run/
-  #       - /home/pi/HLF-for-RPI-/mynetwork/crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/msp:/etc/hyperledger/fabric/msp
-  #       - /home/pi/HLF-for-RPI-/mynetwork/crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls:/etc/hyperledger/fabric/tls
-  #       - peer3.org1.example.com:/var/hyperledger/production
-  #   working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-  #   command: peer node start
-  #   ports:
-  #     - 10051:10051
-  #   networks:
-  #     - pi-network
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.hostname == pi3
-
-  # cli:
-  #   # container_name: cli
-  #   image: hyperledger/fabric-tools:latest
-  #   tty: true
-  #   stdin_open: true
-  #   environment:
-  #     - GOPATH=/opt/gopath
-  #     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-  #     - FABRIC_LOGGING_SPEC=INFO
-  #     #- FABRIC_LOGGING_SPEC=DEBUG
-  #   working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-  #   command: /bin/bash
-  #   volumes:
-  #       - /var/run/:/host/var/run/
-  #       - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations
-  #       - ../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-  #   depends_on:
-  #     - orderer
-  #     - peer0
-  #     - peer1
-  #     - peer2
-  #     - peer3
-  #   networks:
-  #     - pi-network
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.hostname == otto-UX360UAK

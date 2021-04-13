@@ -185,6 +185,67 @@ services:
         constraints:
           - node.hostname == pi1
 
+  peer2:
+    # container_name: peer0.org1.example.com
+    image: ottoflaherty/fabric-peer:arm64-2.3
+    environment:
+    #   # Peer specific variabes
+      
+      - CORE_PEER_ID=peer1.org1.example.com
+      # Used to name chaincode containers potentially
+      - CORE_PEER_NETWORKID=dev
+      # OTher peers IN org use this to find this peer
+      - CORE_PEER_ADDRESS=192.168.86.151:9051
+      #stays 0000 because 
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_ADDRESSAUTODETECT=false
+      - CORE_PEER_PROFILE_ENABLED=true
+      
+    #   - CORE_PEER_LOCALMSPID=Org1MSP
+
+      # GOSSIP SHIT
+      - CORE_PEER_GOSSIP_BOOTSTRAP=192.168.86.156:7051 192.168.86.74:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=192.168.86.151:9051
+
+    #   #Generic peer variables
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+    #   # the following setting starts chaincode containers on the same
+    #   # bridge network as the peers
+    #   # https://docs.docker.com/compose/networking/
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=pi-network
+      - CORE_VM_DOCKER_ATTACHSTDOUT=true
+
+    #   - FABRIC_LOGGING_SPEC=INFO
+    #   #- FABRIC_LOGGING_SPEC=DEBUG
+
+    #   - CORE_PEER_TLS_ENABLED=true
+    #   - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+    #   - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+    #   - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+
+      - CORE_PEER_CHAINCODEADDRESS=peer2.org1.example.com:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      
+    volumes:
+        - /var/run/docker.sock:/host/var/run/docker.sock
+        - /home/pi/HLF-for-RPI-/organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/fabric/msp
+        - /home/pi/HLF-for-RPI-/organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls:/etc/hyperledger/fabric/tls
+        - peer2.org1.example.com:/var/hyperledger/production
+        - /home/pi/HLF-for-RPI-/corepi:/etc/hyperledger/fabric
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 9051:9051
+      - 9052:9052
+    networks:
+      pi-network:
+        aliases:
+          - peer2.org1.example.com
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == pi2
+
   # peer2:
   #   # container_name: peer2.org1.example.com
   #   image: hyperledger/fabric-peer:latest

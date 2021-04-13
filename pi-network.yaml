@@ -54,6 +54,7 @@ services:
     ports:
       - 7050:7050
       - 7053:7053
+    hostname: orderer.example.com
     networks:
       pi-network:
         aliases:
@@ -115,6 +116,7 @@ services:
     ports:
       - 7051:7051
       - 7052:7052
+    hostname: peer0.org1.example.com
     networks:
       pi-network:
         aliases:
@@ -176,6 +178,7 @@ services:
     ports:
       - 8051:8051
       - 8052:8052
+    hostname: peer1.org1.example.com
     networks:
       pi-network:
         aliases:
@@ -237,6 +240,7 @@ services:
     ports:
       - 9051:9051
       - 9052:9052
+    hostname: peer2.org1.example.com
     networks:
       pi-network:
         aliases:

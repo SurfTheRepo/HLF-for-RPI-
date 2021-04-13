@@ -83,8 +83,8 @@ services:
     #   - CORE_PEER_LOCALMSPID=Org1MSP
 
       # GOSSIP SHIT
-      - CORE_PEER_GOSSIP_BOOTSTRAP=192.168.86.74:8051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=192.168.86.156:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:8051 peer1.org1.example.com:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
 
       #Generic peer variables
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
@@ -143,8 +143,8 @@ services:
     #   - CORE_PEER_LOCALMSPID=Org1MSP
 
       # GOSSIP SHIT
-      - CORE_PEER_GOSSIP_BOOTSTRAP=192.168.86.156:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=192.168.86.74:8051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051 peer2.org1.example.com:9051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:8051
 
     #   #Generic peer variables
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
@@ -191,7 +191,7 @@ services:
     environment:
     #   # Peer specific variabes
       
-      - CORE_PEER_ID=peer1.org1.example.com
+      - CORE_PEER_ID=peer2.org1.example.com
       # Used to name chaincode containers potentially
       - CORE_PEER_NETWORKID=dev
       # OTher peers IN org use this to find this peer
@@ -204,8 +204,8 @@ services:
     #   - CORE_PEER_LOCALMSPID=Org1MSP
 
       # GOSSIP SHIT
-      - CORE_PEER_GOSSIP_BOOTSTRAP=192.168.86.156:7051 192.168.86.74:8051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=192.168.86.151:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051 peer1.org1.example.com:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.org1.example.com:9051
 
     #   #Generic peer variables
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock

@@ -44,6 +44,9 @@ services:
       - ORDERER_ADMIN_TLS_CLIENTROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
       - ORDERER_ADMIN_LISTENADDRESS=0.0.0.0:7053
       
+      - ORDERER_OPERATIONS_LISTENADDRESS=orderer.example.com:8443
+      - ORDERER_METRICS_PROVIDER=prometheus
+      
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
@@ -100,6 +103,7 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       
       - CORE_OPERATIONS_LISTENADDRESS=peer0.org1.example.com:9443
+      - CORE_METRICS_PROVIDER=prometheus
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
         - ./organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp
@@ -158,7 +162,7 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
       
       - CORE_OPERATIONS_LISTENADDRESS=peer1.org1.example.com:9443
-
+      - CORE_METRICS_PROVIDER=prometheus
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
         - /home/pi/HLF-for-RPI-/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/msp
@@ -215,6 +219,7 @@ services:
       
       - CORE_OPERATIONS_LISTENADDRESS=peer2.org1.example.com:9443
 
+      - CORE_METRICS_PROVIDER=prometheus
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
         - /home/pi/HLF-for-RPI-/organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/fabric/msp
